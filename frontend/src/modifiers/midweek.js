@@ -4,28 +4,7 @@ import { load } from 'cheerio';
 const populateMidweek = async ({ source, target, footer }) => {
 
     /**
-    const sourceReader = new FileReader();
-    sourceReader.readAsText(source);
-    let sourceHtml = await(async () => {
-        return new Promise((resolve, reject) => {
-            sourceReader.addEventListener('load', () => {
-                // this will then display a text file
-                resolve(sourceReader.result);
-            });
-        });
-    })();
-
-    const targetReader = new FileReader();
-    targetReader.readAsText(target);
-    let targetHtml = await(async () => {
-        return new Promise((resolve, reject) => {
-            targetReader.addEventListener('load', () => {
-                // this will then display a text file
-                resolve(targetReader.result);
-            });
-        });
-    })();
-
+    ...
     const footerReader = new FileReader();
     footerReader.readAsText(footer);
     let footerHtml = await(async () => {
@@ -65,10 +44,6 @@ const populateMidweek = async ({ source, target, footer }) => {
 
     const [sourceHtml, targetHtml, footerHtml] = await Promise.all([sourcePromise, targetPromise, footerPromise]);
 
-
-
-
-
     // source - get a tags' href
     let $src$ = load(sourceHtml);
 
@@ -76,11 +51,7 @@ const populateMidweek = async ({ source, target, footer }) => {
     let href = [];
     $src$('.action-button').children('a').toArray().forEach(el => href.push(el.attribs.href));
 
-    // console.log(href);
-
     let count = 0;
-    let link = `<a href=${href[count++]}></a>`;
-    // console.log(link, 'link');
 
     // target - wrap button with a tag above
     let $tgt$ = load(targetHtml);
@@ -90,6 +61,8 @@ const populateMidweek = async ({ source, target, footer }) => {
             return el.attribs.src === 'https://t.contentsvr.com/1980181091214740259550/viewListing.gif';
         }
     ).each((i, el) => {
+        let link = `<a href=${href[count++]}></a>`;
+        // console.log(link, 'link');
         const $el = $tgt$(el);
         $el.wrap(link);
     });
