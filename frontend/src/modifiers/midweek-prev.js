@@ -55,7 +55,12 @@ const populateMidweek = async ({ source, target, footer }) => {
 
     // target - wrap button with a tag above
     let $tgt$ = load(targetHtml);
-    $tgt$('.cbR-image-fit-container2').children('img').each((i, el) => {
+    $tgt$('img').filter(
+        function (i, el) {
+            // this === el
+            return el.attribs.src === 'https://t.contentsvr.com/1980181091214740259550/viewListing.gif';
+        }
+    ).each((i, el) => {
         let link = `<a href=${href[count++]}></a>`;
         // console.log(link, 'link');
         const $el = $tgt$(el);
@@ -66,7 +71,7 @@ const populateMidweek = async ({ source, target, footer }) => {
     // console.log($tgt$.html());
 
     // change logo to footer info
-    $tgt$('.cbR-image-aligncenter').children('div').replaceWith(footerHtml);
+    $tgt$('.cbR-logopadding').children('div').replaceWith(footerHtml);
 
 
     // fs.writeFileSync('../../../unloads' + KEYWORD_MIDWEEK, $tgt$.html());
